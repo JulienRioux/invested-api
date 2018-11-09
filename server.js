@@ -80,10 +80,43 @@ app.post("/search", (req, res) => {
 				const item = $(el).text();
 				if(item !== "") resultsList.push(item);
 			})
+
+			// get some info about the company
+			let infoList = [];
+			$(".table-condensed tr td").each((i, el) => {
+				const item = $(el).text();
+				if(item !== "") infoList.push(item);
+			})
+			infoList = infoList.slice(0, 14);
+			// infoObj = {};
+			// // create an object from the list
+			// for(let i = 0; i < infoList.length; i+=2){
+			// 	// get the boss value and title (not uniformized...)
+			// 	let key;
+			// 	let value;
+			// 	if(i === 2){
+			// 		key = "CEO"
+			// 		value = [infoList[i].replace("\n", ""), infoList[i+1].replace("\n", "")];
+			// 		// value = {
+			// 		// 	title: infoList[i].replace("\n", ""),
+			// 		// 	name: infoList[i+1].replace("\n", "")
+			// 		// }
+			// 	}
+			// 	else {
+			// 		key = infoList[i].replace("\n", "");
+			// 		value = infoList[i+1].replace("\n", "");
+			// 	}
+			// 	if(value === undefined) value = "not found";
+			// 	infoObj[key] = value;
+			// }
+			console.log(infoList);
+			// console.log(infoObj);
+
 			// Send it as json
 			res.json({
 				error: false,
-				resultsList: resultsList
+				resultsList: resultsList,
+				infoList: infoList
 			})
 		}
 		else {
@@ -96,6 +129,40 @@ app.post("/search", (req, res) => {
 		}
 	})
 })
+
+
+// let tempUrl = "https://fintel.io/so/us/tsla";
+
+// let tempUrl = "https://fintel.io/i/berkshire-hathaway"
+
+// request(tempUrl, (error, response, html) => {
+// 	if(!error && response.statusCode === 200) {
+// 		const $ = cheerio.load(html);
+// 		// create a list to insert the results of the scrapping
+// 		// $("#transactions tr td a").each((i, el) => {
+// 		// 	const item = $(el).text();
+// 		// 	if(item !== "") resultsList.push(item);
+// 		// })
+//
+//
+// 		// get some info about the company
+// 		let infoList = [];
+// 		$(".table-condensed tr td").each((i, el) => {
+// 			const item = $(el).text();
+// 			if(item !== "") infoList.push(item);
+// 		})
+// 		infoList = infoList.slice(0, 14);
+// 		infoObj = {};
+// 		// create an object from the list
+// 		for(let i = 0; i < infoList.length; i+=2){
+// 			const key = infoList[i].replace("\n", "");
+// 			const value = infoList[i+1].replace("\n", "");
+// 			infoObj[key] = value;
+// 		}
+// 		console.log(infoObj);
+// 	}
+// });
+
 
 // start the port
 app.listen(PORT, console.log(`Server running on port ${ PORT }`));
